@@ -31,3 +31,33 @@ exports.searchFlights = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// New booking logic
+exports.bookFlight = async (req, res) => {
+  const { flightId, seatsToBook } = req.body;
+
+  try {
+    const flight = await Flight.findByPk(flightId);
+
+    if (!flight) {
+      return res.status(404).json({ message: "Flight not found!" });
+    }
+
+    // Check if enough seats are available
+    if (seatsToBook > flight.availableSeats) {
+      return res.status(400).json({ message: "Not enough available seats." });
+    }
+
+    // Update available seats
+    flight.availableSeats -= seatsToBook;
+
+    await flight.save(); // Save the updated flight
+
+    res.json({
+      message: `Successfully booked ${seatsToBook} seat(s) on flight ${flight.flightNumber}!`,
+      availableSeats: flight.availableSeats, // Return updated available seats
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
