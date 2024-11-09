@@ -1,12 +1,17 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors"); // Import cors
 const sequelize = require("./config/database");
 const flightRoutes = require("./routes/flights");
 const errorHandler = require("./middleware/errorHandler");
-const seedFlights = require("./seeders/flightSeeder"); // Import seeder
-const PORT = process.env.PORT || 3001; // Default to 3001 if PORT is undefined
+const seedFlights = require("./seeders/flightSeeder");
+const PORT = process.env.PORT || 3001;
 
 const app = express();
+
+// Use CORS middleware to allow requests from all origins
+app.use(cors());
+
 app.use(express.json());
 
 // Route configuration
