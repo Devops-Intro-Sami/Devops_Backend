@@ -3,6 +3,7 @@ const express = require("express");
 const sequelize = require("./config/database");
 const flightRoutes = require("./routes/flights");
 const errorHandler = require("./middleware/errorHandler");
+const PORT = process.env.PORT || 3000;  // Default to 3000 if PORT is undefined
 
 const app = express();
 app.use(express.json());
@@ -18,8 +19,8 @@ sequelize
   .sync()
   .then(() => {
     console.log("Database synced");
-    app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((err) => console.error("Database connection error:", err));
