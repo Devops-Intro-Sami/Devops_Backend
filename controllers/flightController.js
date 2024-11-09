@@ -1,4 +1,4 @@
-const Flight = require("../models/Flight");
+const Flight = require("../src/models/Flight");
 
 exports.searchFlights = async (req, res) => {
   const { departureLocation, destinationLocation } = req.query;
