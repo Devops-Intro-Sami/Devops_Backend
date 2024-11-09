@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: default_user
+      POSTGRES_PASSWORD: default_password
+      POSTGRES_DB: flightbooking
+    ports:
+      - "5433:5432"  # Use 5433 on the host to avoid conflicts
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    image: node:latest
+    build:
+      context: .  # Set to the directory containing the Dockerfile
+      dockerfile: Dockerfile  # Specify the Dockerfile name if needed
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      DATABASE_URL: postgres://default_user:default_password@db:5432/flightbooking
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: "node index.js"  # Adjust this based on your start script
+
+volumes:
+  pgdata:
