@@ -22,7 +22,7 @@ services:
     environment:
       DATABASE_URL: postgres://default_user:default_password@db:5432/flightbooking
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - db
     command: "node index.js"  # Adjust this based on your start script
