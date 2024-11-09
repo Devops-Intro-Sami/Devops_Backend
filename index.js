@@ -3,13 +3,17 @@ const express = require("express");
 const sequelize = require("./config/database");
 const flightRoutes = require("./routes/flights");
 const errorHandler = require("./middleware/errorHandler");
-const PORT = process.env.PORT || 3001;  // Default to 3001 if PORT is undefined
+const PORT = process.env.PORT || 3001; // Default to 3001 if PORT is undefined
 
 const app = express();
 app.use(express.json());
 
 // Route configuration
 app.use("/api/flights", flightRoutes);
+
+app.use("/ping", () => {
+  console.log("Pong!");
+});
 
 // Error handling middleware
 app.use(errorHandler);
