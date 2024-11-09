@@ -1,4 +1,4 @@
-const { Flight } = require("../models");
+const Flight = require("../src/models/Flight");
 
 const flightData = [
   {
