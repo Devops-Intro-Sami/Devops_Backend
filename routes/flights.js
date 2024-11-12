@@ -8,4 +8,7 @@ router.get("/search", flightController.searchFlights);
 // booking route
 router.post("/book", flightController.bookFlight);
 
+// add flight
+router.post("/add", flightController.addFlight);
+
 module.exports = router;
