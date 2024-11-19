@@ -23,7 +23,7 @@ app.use(errorHandler);
 
 // Database connection and server start
 sequelize
-  .sync()
+  .sync({ force: true })
   .then(async () => {
     console.log("Database synced");
 
