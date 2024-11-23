@@ -2,16 +2,36 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "production" , "staging" ]
+    branches: [ "production", "staging" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Run docker-compose
-      uses: hoverkraft-tech/compose-action@v2.0.1
-      with:
-        compose-file: "./docker-compose_test.yml"
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
+    - name: Start Docker Compose
+      run: |
+        docker-compose -f docker-compose_test.yml up --build -d
+
+    - name: Wait for app to be ready
+      run: |
+        for i in {1..10}; do
+          curl http://localhost:3001 && break || sleep 5
+        done
+
+    - name: Run Cypress Tests
+      run: |
+        docker exec test_db-1 cypress run
+
+    - name: Stop and Clean Up
+      if: always()
+      run: |
+        docker-compose -f docker-compose_test.yml down -v
