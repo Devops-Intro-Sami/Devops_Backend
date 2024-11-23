@@ -1,7 +1,7 @@
 describe("Flight search test", () => {
   it("should inject a flight into the database and verify it exists", () => {
     // Fetch all flights and verify the injected flight is present
-    cy.request("GET", "http://app:3001/api/flights/search").then((response) => {      
+    cy.request("GET", "http://test_app:3001/api/flights/search").then((response) => {      
       expect(response.status).to.eq(200);
       expect(response.body).to.be.an("array");
       expect(response.body.length).to.be.greaterThan(0);
