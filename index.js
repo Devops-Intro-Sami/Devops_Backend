@@ -6,6 +6,7 @@ const flightRoutes = require("./routes/flights");
 const errorHandler = require("./middleware/errorHandler");
 const seedFlights = require("./seeders/flightSeeder");
 const PORT = process.env.PORT || 3001;
+const force = process.env.FORCE === 'true';
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use(errorHandler);
 
 // Database connection and server start
 sequelize
-  .sync({force: process.env.FORCE})
+  .sync({force: force})
   .then(async () => {
     console.log("Database synced");
 
