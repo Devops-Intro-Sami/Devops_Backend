@@ -61,3 +61,30 @@ exports.bookFlight = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.addFlight = async (req, res) => {
+  try {
+    const { flightNumber, departureLocation, destinationLocation, departureTime, arrivalTime, cost, availableSeats } = req.body;
+    console.log("in add in backend");
+    // Validate request data
+    if (!flightNumber || !departureLocation || !destinationLocation || !departureTime || !arrivalTime || !cost || !availableSeats) {
+      return res.status(400).json({ error: "All flight details are required" });
+    }
+
+    // Create a new flight in the database
+    const newFlight = await Flight.create({
+      flightNumber,
+      departureLocation,
+      destinationLocation,
+      departureTime,
+      arrivalTime,
+      cost,
+      availableSeats,
+    });
+
+    res.status(201).json(newFlight); // Send back the created flight
+  } catch (error) {
+    console.error("Error adding flight:", error);
+    res.status(500).json({ error: "Failed to add flight" });
+  }
+};
