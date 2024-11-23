@@ -11,7 +11,7 @@ describe("Flight add test", () => {
 
   it("should inject a flight into the database and verify it exists", () => {
     // Inject the flight using POST request
-    cy.request("POST", "http://app:3001/api/flights/add", sampleFlight).then((response) => {
+    cy.request("POST", "http://test_app:3001/api/flights/add", sampleFlight).then((response) => {
       expect(response.status).to.eq(201); // Check for successful creation
       expect(response.body).to.exist;
 
@@ -29,7 +29,7 @@ describe("Flight add test", () => {
     });
 
     // Fetch all flights and verify the injected flight is present
-    cy.request("GET", "http://app:3001/api/flights/search").then((response) => {
+    cy.request("GET", "http://test_app:3001/api/flights/search").then((response) => {
       expect(response.status).to.eq(200);
       const flights = response.body;
 
