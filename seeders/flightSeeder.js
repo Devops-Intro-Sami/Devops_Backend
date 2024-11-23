@@ -55,6 +55,24 @@ const flightData = [
     cost: 150,
     availableSeats: 10,
   },
+  {
+    flightNumber: "FL525",
+    departureLocation: "Israel (ISR)",
+    destinationLocation: "New York (JFK)",
+    departureTime: "2024-11-15T11:13:00",
+    arrivalTime: "2024-11-15T13:22:30",
+    cost: 400,
+    availableSeats: 0,
+  },
+  {
+    flightNumber: "FL627",
+    departureLocation: "New York (JFK)",
+    destinationLocation: "Israel (ISR)",
+    departureTime: "2024-11-15T11:13:00",
+    arrivalTime: "2024-11-15T13:22:30",
+    cost: 450,
+    availableSeats: 2,
+  },
 ];
 
 const seedFlights = async () => {
