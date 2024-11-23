@@ -1,16 +1,16 @@
 services:
-  db:
+  test_db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: default_user
-      POSTGRES_PASSWORD: default_password
-      POSTGRES_DB: flightbooking
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: flightbooking_test
     ports:
       - "5433:5432"  # Use 5433 on the host to avoid conflicts
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  app:
+  test_app:
     image: node:latest
     build:
       context: .  # Set to the directory containing the Dockerfile
@@ -20,13 +20,24 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      DATABASE_URL: postgres://default_user:default_password@db:5432/flightbooking
-      FORCE: false
+      DATABASE_URL: postgres://test_user:test_password@db:5432/flightbooking_test
+      FORCE: true
     ports:
       - "3001:3001"
     depends_on:
-      - db
+      - test_db
     command: "node index.js"  # Adjust this based on your start script
+  
+  test:
+    image: cypress/included:latest
+    working_dir: /e2e
+    volumes:
+      - .:/e2e
+    depends_on:
+      - test_app
+    environment:
+      - CYPRESS_BASE_URL=http://app:3001
+    command: ["cypress", "run"]
 
 volumes:
   pgdata:

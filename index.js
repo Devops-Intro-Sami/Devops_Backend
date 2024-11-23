@@ -23,7 +23,7 @@ app.use(errorHandler);
 
 // Database connection and server start
 sequelize
-  .sync()
+  .sync({force: process.env.FORCE})
   .then(async () => {
     console.log("Database synced");
 
