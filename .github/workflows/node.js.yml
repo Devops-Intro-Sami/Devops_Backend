@@ -28,7 +28,7 @@ jobs:
 
     - name: Run Cypress Tests
       run: |
-        docker exec $(docker ps -qf "name=test_test_1") cypress run
+        docker-compose -f docker-compose_test.yml run --rm test
 
     - name: Debug Logs (if needed)
       if: failure()
