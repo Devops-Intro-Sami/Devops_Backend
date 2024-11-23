@@ -9,29 +9,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Set up Docker
+    - name: Set up Docker Compose
       run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose
+        sudo apt-get update && sudo apt-get install -y docker-compose
 
-    - name: Start Docker Compose
+    - name: Build and Start Docker Compose Services
       run: |
         docker-compose -f docker-compose_test.yml up --build -d
 
-    - name: Wait for app to be ready
+    - name: Wait for App to be Ready
       run: |
         for i in {1..10}; do
-          curl http://localhost:3001 && break || sleep 5
+          curl -s http://localhost:3001 && break || sleep 5
         done
 
     - name: Run Cypress Tests
       run: |
-        docker exec test_db-1 cypress run
+        docker-compose -f docker-compose_test.yml run --rm test
 
-    - name: Stop and Clean Up
+    - name: Debug Logs (if needed)
+      if: failure()
+      run: |
+        docker-compose -f docker-compose_test.yml logs
+
+    - name: Stop and Clean Up Docker Services
       if: always()
       run: |
         docker-compose -f docker-compose_test.yml down -v

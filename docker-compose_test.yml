@@ -21,7 +21,7 @@ services:
       - /app/node_modules
     environment:
       DATABASE_URL: postgres://test_user:default_password@test_db:5432/flightbooking_test
-      FORCE: true
+      FORCE: "true"
     ports:
       - "3001:3001"
     depends_on:
