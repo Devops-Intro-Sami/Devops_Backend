@@ -26,6 +26,17 @@ services:
     depends_on:
       - db
     command: "node index.js"  # Adjust this based on your start script
+  
+  test:
+    image: cypress/included:latest
+    working_dir: /e2e
+    volumes:
+      - .:/e2e
+    depends_on:
+      - app
+    environment:
+      - CYPRESS_BASE_URL=http://app:3001
+    command: ["cypress", "run"]
 
 volumes:
   pgdata:

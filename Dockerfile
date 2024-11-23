@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies, including dotenv
+# Install dependencies, including dotenvz
 RUN npm install
 
 # Copy the rest of the application code
