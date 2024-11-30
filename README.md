@@ -2,12 +2,42 @@
 Overview
 This project serves is the backend for a flight booking system, designed with scalability, modularity, and maintainability in mind. It includes a RESTful API for managing flight bookings, integrated database configuration, and test cases to ensure reliability.
 
-Features
+## Features
 - Flight management (add, update, delete, search)
 - Database seeding for initial data population
 - Error handling middleware
 - Modular architecture with MVC pattern
 - End-to-end Cypress tests
+
+## Project structure
+```plaintext
+DevOps_Backend/
+├── config/
+│   └── database.js        # PostgreSQL configuration
+├── controllers/
+│   └── flightController.js # Handles flight-related logic
+├── middleware/
+│   └── errorHandler.js    # Error handling middleware
+├── routes/
+│   └── flights.js         # Routes for flight operations
+├── seeders/
+│   └── flightSeeder.js    # Seeder for populating flight data
+├── src/
+│   ├── models/
+│   │   ├── Booking.js     # Model for bookings
+│   │   └── Flight.js      # Model for flights
+├── cypress/
+│   └── e2e/
+│       ├── flight_add.cy.js   # Test for adding flights
+│       └── flight_search.cy.js # Test for searching flights
+├── .github/
+│   └── workflows/
+│       └── node.js.yml    # GitHub Actions CI/CD workflow
+├── package.json           # Project dependencies
+└── README.md              # Project documentation
+```
+
+## Running the project
 
 In order to run this project in production settings run:
 ``restart-docker.bat``
