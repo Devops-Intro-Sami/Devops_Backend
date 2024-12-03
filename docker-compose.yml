@@ -6,15 +6,15 @@ services:
       POSTGRES_PASSWORD: default_password
       POSTGRES_DB: flightbooking
     ports:
-      - "5433:5432"  # Use 5433 on the host to avoid conflicts
+      - "5433:5432" # Use 5433 on the host to avoid conflicts
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   app:
     image: node:latest
     build:
-      context: .  # Set to the directory containing the Dockerfile
-      dockerfile: Dockerfile  # Specify the Dockerfile name if needed
+      context: . # Set to the directory containing the Dockerfile
+      dockerfile: Dockerfile # Specify the Dockerfile name if needed
     working_dir: /app
     volumes:
       - .:/app
@@ -26,7 +26,7 @@ services:
       - "3001:3001"
     depends_on:
       - db
-    command: ["sh", "-c", "sleep 1 && node index.js"]  # Sleep to let the db run,the start
+    command: ["sh", "-c", "sleep 3 && node index.js"] # Sleep to let the db run,the start
 
 volumes:
   pgdata:
